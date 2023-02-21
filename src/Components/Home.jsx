@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Table } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import Data from "./Data";
@@ -7,6 +7,7 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import styled from "styled-components";
 
 const Home = () => {
+    const [value, setValue] = useState([...Data]);
     let history = useNavigate();
 
     //#Edit Operation
@@ -27,13 +28,38 @@ const Home = () => {
         history('/');
 
     }
+
+    //  Operation
+    const sortedTodo = (col) => {
+        const sorted = [...value].sort((a, b) =>
+            a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+        );
+        setValue(sorted);
+    }
+
+
+
     const Container = styled.div`
         text-align: center;
         margin: 0 5%;
 
-        .dropdown-toggle{
-            margin: 0 0 1rem;
-        }
+    .dropdown-toggle{
+        margin: 0 0 1rem;
+    }
+    .delete{
+        color: red;
+    }
+    .delete:hover{
+        opacity: 0.5;
+    }
+    .edit:hover{
+        opacity: 0.5;
+    }
+    .table-row{
+        padding: 20px;
+        background-color: #0d6efd;
+        color: white;
+    }
     `
     const Button = styled.button`
         background-color:#0d6efd;
@@ -41,7 +67,6 @@ const Home = () => {
         color: white;
         border-radius: 8px;
         border: none;
-     
     `
     const Heading = styled.h1`
         font-style: italic;
@@ -49,8 +74,8 @@ const Home = () => {
     `
     const Filter = styled.button`
         position: sticky;
-        background-color:#0d6efd;
-        padding: 5px;
+        background-color: black;
+        padding: 8px;
         border-radius: 5px;
         color: white;
         border: none;
@@ -63,18 +88,18 @@ const Home = () => {
                 <Heading>Todo List</Heading>
                 <Container>
                     <Filter className="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        Filter
+                        Filter By
                     </Filter>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a className="dropdown-item" href="#">By Name</a></li>
-                        <li><a className="dropdown-item" href="#">By Salary</a></li>
-                        <li><a className="dropdown-item" href="#">By Month</a></li>
+                        <li><span onClick={() => sortedTodo("name")} className="dropdown-item" >By Name</span></li>
+                        <li><span onClick={() => sortedTodo("salary")} className="dropdown-item">By Salary</span></li>
+                        <li><span onClick={() => sortedTodo("month")} className="dropdown-item">By Month</span></li>
                     </ul>
                 </Container>
 
                 <Table striped bordered hover size="sm">
                     <thead>
-                        <tr>
+                        <tr className="table-row">
                             <th>
                                 Name
                             </th>
@@ -107,10 +132,9 @@ const Home = () => {
                                             </td>
                                             <td>
                                                 <Link to={`/edit`}>
-
-                                                    <EditOutlinedIcon onClick={() => handleEdit(item.id, item.Name, item.Salary, item.DateOfJoining)} />
+                                                    <EditOutlinedIcon className="edit"  onClick={() => handleEdit(item.id, item.Name, item.Salary, item.DateOfJoining)} />
                                                 </Link>
-                                                <DeleteOutlineOutlinedIcon sx={{ mx: 3, cursor: 'pointer' }} color="error" onClick={() => handleDelete(item.id)} />
+                                                <DeleteOutlineOutlinedIcon className="delete" sx={{ mx: 3, cursor: 'pointer' }} color="error" onClick={() => handleDelete(item.id)} />
                                             </td>
                                         </tr>
                                     )

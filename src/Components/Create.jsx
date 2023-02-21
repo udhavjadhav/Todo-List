@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import Data from './Data'
 import { v4 as uuid } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 // Creating Todo
 const Create = () => {
@@ -27,16 +26,10 @@ const Create = () => {
             setError("Please fill all the details!")
         }
         else {
-            //Push todo to (Data.jsx)
             Data.push({ id: uniqueId, Name: a, Salary: b, DateOfJoining: c });
             Navigate('/');
         }
     }
-
-    const handleBack = () =>{
-        Navigate('/')
-    }
-
     //Styled Components
     const Container = styled.div`
     text-align: center;
@@ -70,7 +63,7 @@ const Create = () => {
                 <Form.Control type="text" placeholder="Enter Name" maxLength={100} onChange={(e) => setName(e.target.value)} required></Form.Control>
             </Form.Group>
             <Form.Group className="input" controlId="FormSalary">
-                <Form.Control type="text" placeholder="Enter Salary" onChange={(e) => setSalary(e.target.value)} required></Form.Control>
+                <Form.Control type="number" placeholder="Enter Salary" onChange={(e) => setSalary(e.target.value)} required></Form.Control>
             </Form.Group>
             <Form.Group className="input" controlId="FormDate" >
                 <Form.Control type="date" placeholder="Enter Date" onChange={(e) => setDateOfJoining(e.target.value)} required ></Form.Control>

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import Data from "./Data";
 import {v4 as uuid} from 'uuid';
 import {useNavigate} from 'react-router-dom';
@@ -32,19 +32,14 @@ function Edit(){
         setSalary(localStorage.getItem('Salary'))
         setDateOfJoining(localStorage.getItem('DateOfJoining'))
     },[]);  
-    
-    //Styled Components
-    const Container = styled.div`
+
+    const Component = styled.div`
         text-align: center;
         margin: 0 5%;
-
-        .input{
-            margin-bottom: 1.5rem;
-        }
     `
     const Heading = styled.h1`
-        margin: 3rem;
-        font-style: italic;
+         font-style: italic;
+         margin: 3rem;
     `
     const Button = styled.button`
         width:100%;
@@ -53,24 +48,23 @@ function Edit(){
         border: none;
         border-radius: 5px;
         padding: 8px;
-
     `
     return(
-        <Container>
+        <Component>
             <Heading>Edit Todo</Heading>
-            <Container>
-                <Form.Group className="input" controlId="FormName">
+            <Component>
+                <Form.Group className="mb-3" controlId="FormName">
                     <Form.Control type="text" placeholder="Enter Name" maxLength={100} value={name} onChange={(e)=> setName(e.target.value)} required></Form.Control>
                 </Form.Group>
-                <Form.Group className="input" controlId="FormSalary">
+                <Form.Group className="mb-3" controlId="FormSalary">
                     <Form.Control type="text" placeholder="Enter Salary" value={salary} onChange={(e)=> setSalary(e.target.value)} required></Form.Control>
                 </Form.Group>
-                <Form.Group className="input" controlId="FormDate">
+                <Form.Group className="mb-3" controlId="FormDate">
                     <Form.Control type="text" placeholder="Enter Date" value={dateOfJoining} onChange={(e)=> setDateOfJoining(e.target.value)} required></Form.Control>
                 </Form.Group>
                 <Button onClick={(e)=>handleSubmit(e)}>Update</Button>
-            </Container>
-        </Container>
+            </Component>
+        </Component>
     )
 }
 export default Edit;
